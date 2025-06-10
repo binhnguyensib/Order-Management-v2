@@ -1,0 +1,84 @@
+package app
+
+import (
+	"intern-project-v2/config"
+	"intern-project-v2/handler"
+	"intern-project-v2/repository/mongodb"
+	"intern-project-v2/usecase"
+	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+)
+
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		panic("Error loading .env file")
+	}
+}
+
+func Run() {
+	db, err := config.ConnectDB()
+	{
+		if err != nil {
+			panic("Failed to connect to database: " + err.Error())
+		}
+	}
+	customerRepo := mongodb.NewCustomerRepository(db.DB)
+	customerUsecase := usecase.NewCustomerUsecase(customerRepo)
+	customerHandler := handler.NewCustomerHandler(customerUsecase)
+
+	productRepo := mongodb.NewProductRepository(db.DB)
+	productUsecase := usecase.NewProductUsecase(productRepo)
+	productHandler := handler.NewProductHandler(productUsecase)
+
+	orderRepo := mongodb.NewOrderRepository(db.DB)
+	orderUsecase := usecase.NewOrderUsecase(orderRepo)
+	orderHandler := handler.NewOrderHandler(orderUsecase)
+
+	router := gin.Default()
+
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
+
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"status":  "ok",
+			"message": "API is running",
+		})
+	})
+
+	api := router.Group("/api")
+	{
+		customers := api.Group("/customers")
+		{
+			customers.GET("/", customerHandler.GetAll)
+			customers.GET("/:id", customerHandler.GetByID)
+			customers.POST("/", customerHandler.Create)
+			customers.PUT("/:id", customerHandler.Update)
+			customers.DELETE("/:id", customerHandler.Delete)
+		}
+		products := api.Group("/products")
+		{
+			products.GET("/", productHandler.GetAll)
+			products.GET("/:id", productHandler.GetByID)
+			products.POST("/", productHandler.Create)
+			products.PUT("/:id", productHandler.Update)
+			products.DELETE("/:id", productHandler.Delete)
+		}
+		orders := api.Group("/orders")
+		{
+			orders.GET("/", orderHandler.GetAll)
+			orders.GET("/:id", orderHandler.GetByID)
+			orders.POST("/", orderHandler.Create)
+			orders.PUT("/:id", orderHandler.Update)
+			orders.DELETE("/:id", orderHandler.Delete)
+		}
+	}
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	router.Run(":" + port)
+}
