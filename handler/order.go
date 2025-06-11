@@ -1,32 +1,23 @@
 package handler
 
 import (
-	"context"
 	"intern-project-v2/domain"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type OrderUsecase interface {
-	GetAll(ctx context.Context) ([]*domain.Order, error)
-	GetByID(ctx context.Context, id string) (*domain.Order, error)
-	Create(ctx context.Context, order *domain.OrderRequest) (*domain.Order, error)
-	Update(ctx context.Context, id string, orderReq *domain.OrderRequest) (*domain.Order, error)
-	Delete(ctx context.Context, id string) (*domain.Order, error)
+type orderHandler struct {
+	orderUsecase domain.OrderUsecase
 }
 
-type OrderHandler struct {
-	orderUsecase OrderUsecase
-}
-
-func NewOrderHandler(orderUsecase OrderUsecase) *OrderHandler {
-	return &OrderHandler{
+func NewOrderHandler(orderUsecase domain.OrderUsecase) *orderHandler {
+	return &orderHandler{
 		orderUsecase: orderUsecase,
 	}
 }
 
-func (oh *OrderHandler) GetAll(c *gin.Context) {
+func (oh *orderHandler) GetAll(c *gin.Context) {
 	ctx := c.Request.Context()
 	orders, err := oh.orderUsecase.GetAll(ctx)
 	if err != nil {
@@ -43,7 +34,7 @@ func (oh *OrderHandler) GetAll(c *gin.Context) {
 			"orders":  orders})
 }
 
-func (oh *OrderHandler) GetByID(c *gin.Context) {
+func (oh *orderHandler) GetByID(c *gin.Context) {
 	ctx := c.Request.Context()
 	orderID := c.Param("id")
 	if orderID == "" {
@@ -66,7 +57,7 @@ func (oh *OrderHandler) GetByID(c *gin.Context) {
 		})
 }
 
-func (oh *OrderHandler) Create(c *gin.Context) {
+func (oh *orderHandler) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var orderReq domain.OrderRequest
 	if err := c.ShouldBindJSON(&orderReq); err != nil {
@@ -81,7 +72,7 @@ func (oh *OrderHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, order)
 }
 
-func (oh *OrderHandler) Update(c *gin.Context) {
+func (oh *orderHandler) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	orderID := c.Param("id")
 	if orderID == "" {
@@ -105,7 +96,7 @@ func (oh *OrderHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Order updated successfully", "order": order})
 }
 
-func (oh *OrderHandler) Delete(c *gin.Context) {
+func (oh *orderHandler) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	orderID := c.Param("id")
 	if orderID == "" {

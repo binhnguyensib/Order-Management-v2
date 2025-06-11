@@ -9,18 +9,17 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
-type CustomerRepository struct {
-	// MongoDB client and collection would be defined here
+type customerRepositoryImpl struct {
 	Conn *mongo.Database
 }
 
-func NewCustomerRepository(db *mongo.Database) *CustomerRepository {
-	return &CustomerRepository{
+func NewCustomerRepository(db *mongo.Database) *customerRepositoryImpl {
+	return &customerRepositoryImpl{
 		Conn: db,
 	}
 }
 
-func (cr *CustomerRepository) GetAll(ctx context.Context) ([]*domain.Customer, error) {
+func (cr *customerRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Customer, error) {
 	collection := cr.Conn.Collection("customers")
 	cursor, err := collection.Find(context.TODO(), bson.M{})
 	if err != nil {
@@ -40,7 +39,7 @@ func (cr *CustomerRepository) GetAll(ctx context.Context) ([]*domain.Customer, e
 	return customers, nil
 }
 
-func (cr *CustomerRepository) GetByID(ctx context.Context, id string) (*domain.Customer, error) {
+func (cr *customerRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Customer, error) {
 	collection := cr.Conn.Collection("customers")
 	var customer domain.Customer
 	ObjectID, ok := bson.ObjectIDFromHex(id)
@@ -57,7 +56,7 @@ func (cr *CustomerRepository) GetByID(ctx context.Context, id string) (*domain.C
 	return &customer, nil
 }
 
-func (cr *CustomerRepository) Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error) {
+func (cr *customerRepositoryImpl) Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error) {
 	collection := cr.Conn.Collection("customers")
 	result, err := collection.InsertOne(ctx, customer)
 	if err != nil {
@@ -79,7 +78,7 @@ func (cr *CustomerRepository) Create(ctx context.Context, customer *domain.Custo
 	return createdCustomer, nil
 }
 
-func (cr *CustomerRepository) Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error) {
+func (cr *customerRepositoryImpl) Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error) {
 	collection := cr.Conn.Collection("customers")
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
@@ -111,7 +110,7 @@ func (cr *CustomerRepository) Update(ctx context.Context, id string, customerReq
 	return cr.GetByID(ctx, id)
 }
 
-func (cr *CustomerRepository) Delete(ctx context.Context, id string) (*domain.Customer, error) {
+func (cr *customerRepositoryImpl) Delete(ctx context.Context, id string) (*domain.Customer, error) {
 	collection := cr.Conn.Collection("customers")
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {

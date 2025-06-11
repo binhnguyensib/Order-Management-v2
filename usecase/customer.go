@@ -5,24 +5,16 @@ import (
 	"intern-project-v2/domain"
 )
 
-type CustomerRepository interface {
-	GetAll(ctx context.Context) ([]*domain.Customer, error)
-	GetByID(ctx context.Context, id string) (*domain.Customer, error)
-	Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error)
-	Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error)
-	Delete(ctx context.Context, id string) (*domain.Customer, error)
+type customerUsecaseImpl struct {
+	customerRepo domain.CustomerRepository
 }
 
-type CustomerUsecase struct {
-	customerRepo CustomerRepository
-}
-
-func NewCustomerUsecase(customerRepo CustomerRepository) *CustomerUsecase {
-	return &CustomerUsecase{
+func NewCustomerUsecase(customerRepo domain.CustomerRepository) *customerUsecaseImpl {
+	return &customerUsecaseImpl{
 		customerRepo: customerRepo,
 	}
 }
-func (cu *CustomerUsecase) GetAll(ctx context.Context) ([]*domain.Customer, error) {
+func (cu *customerUsecaseImpl) GetAll(ctx context.Context) ([]*domain.Customer, error) {
 	customers, err := cu.customerRepo.GetAll(ctx)
 	if err != nil {
 		return nil, err
@@ -30,7 +22,7 @@ func (cu *CustomerUsecase) GetAll(ctx context.Context) ([]*domain.Customer, erro
 	return customers, nil
 }
 
-func (cu *CustomerUsecase) GetByID(ctx context.Context, id string) (*domain.Customer, error) {
+func (cu *customerUsecaseImpl) GetByID(ctx context.Context, id string) (*domain.Customer, error) {
 	customer, err := cu.customerRepo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err
@@ -38,7 +30,7 @@ func (cu *CustomerUsecase) GetByID(ctx context.Context, id string) (*domain.Cust
 	return customer, nil
 }
 
-func (cu *CustomerUsecase) Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error) {
+func (cu *customerUsecaseImpl) Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error) {
 	cus, err := cu.customerRepo.Create(ctx, customer)
 	if err != nil {
 		return nil, err
@@ -46,7 +38,7 @@ func (cu *CustomerUsecase) Create(ctx context.Context, customer *domain.Customer
 	return cus, nil
 }
 
-func (cu *CustomerUsecase) Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error) {
+func (cu *customerUsecaseImpl) Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error) {
 	cus, err := cu.customerRepo.Update(ctx, id, customerReq)
 	if err != nil {
 		return nil, err
@@ -54,7 +46,7 @@ func (cu *CustomerUsecase) Update(ctx context.Context, id string, customerReq *d
 	return cus, nil
 }
 
-func (cu *CustomerUsecase) Delete(ctx context.Context, id string) (*domain.Customer, error) {
+func (cu *customerUsecaseImpl) Delete(ctx context.Context, id string) (*domain.Customer, error) {
 	cus, err := cu.customerRepo.Delete(ctx, id)
 	if err != nil {
 		return nil, err

@@ -1,32 +1,23 @@
 package handler
 
 import (
-	"context"
 	"intern-project-v2/domain"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type ProductUsecase interface {
-	GetAll(ctx context.Context) ([]*domain.Product, error)
-	GetByID(ctx context.Context, id string) (*domain.Product, error)
-	Create(ctx context.Context, product *domain.ProductRequest) (*domain.Product, error)
-	Update(ctx context.Context, id string, productReq *domain.ProductRequest) (*domain.Product, error)
-	Delete(ctx context.Context, id string) (*domain.Product, error)
+type productHandler struct {
+	productUsecase domain.ProductUsecase
 }
 
-type ProductHandler struct {
-	productUsecase ProductUsecase
-}
-
-func NewProductHandler(productUsecase ProductUsecase) *ProductHandler {
-	return &ProductHandler{
+func NewProductHandler(productUsecase domain.ProductUsecase) *productHandler {
+	return &productHandler{
 		productUsecase: productUsecase,
 	}
 }
 
-func (ph *ProductHandler) GetAll(c *gin.Context) {
+func (ph *productHandler) GetAll(c *gin.Context) {
 	ctx := c.Request.Context()
 	products, err := ph.productUsecase.GetAll(ctx)
 	if err != nil {
@@ -42,7 +33,7 @@ func (ph *ProductHandler) GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, products)
 }
 
-func (ph *ProductHandler) GetByID(c *gin.Context) {
+func (ph *productHandler) GetByID(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})
@@ -64,7 +55,7 @@ func (ph *ProductHandler) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, product)
 }
 
-func (ph *ProductHandler) Create(c *gin.Context) {
+func (ph *productHandler) Create(c *gin.Context) {
 	var productReq domain.ProductRequest
 	if err := c.ShouldBindJSON(&productReq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
@@ -81,7 +72,7 @@ func (ph *ProductHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, product)
 }
 
-func (ph *ProductHandler) Update(c *gin.Context) {
+func (ph *productHandler) Update(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})
@@ -112,7 +103,7 @@ func (ph *ProductHandler) Update(c *gin.Context) {
 	})
 }
 
-func (ph *ProductHandler) Delete(c *gin.Context) {
+func (ph *productHandler) Delete(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})

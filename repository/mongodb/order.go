@@ -12,17 +12,17 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-type OrderRepository struct {
+type orderRepositoryImpl struct {
 	Conn *mongo.Database
 }
 
-func NewOrderRepository(db *mongo.Database) *OrderRepository {
-	return &OrderRepository{
+func NewOrderRepository(db *mongo.Database) *orderRepositoryImpl {
+	return &orderRepositoryImpl{
 		Conn: db,
 	}
 }
 
-func (or *OrderRepository) GetAll(ctx context.Context) ([]*domain.Order, error) {
+func (or *orderRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Order, error) {
 	collection := or.Conn.Collection("orders")
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
@@ -46,7 +46,7 @@ func (or *OrderRepository) GetAll(ctx context.Context) ([]*domain.Order, error) 
 	return orders, nil
 }
 
-func (or *OrderRepository) GetByID(ctx context.Context, id string) (*domain.Order, error) {
+func (or *orderRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Order, error) {
 	collection := or.Conn.Collection("orders")
 	var order domain.Order
 	objectID, err := bson.ObjectIDFromHex(id)
@@ -65,7 +65,7 @@ func (or *OrderRepository) GetByID(ctx context.Context, id string) (*domain.Orde
 	return &order, nil
 }
 
-func (or *OrderRepository) Create(ctx context.Context, order *domain.OrderRequest) (*domain.Order, error) {
+func (or *orderRepositoryImpl) Create(ctx context.Context, order *domain.OrderRequest) (*domain.Order, error) {
 	collection := or.Conn.Collection("orders")
 	newOrder := &domain.Order{
 		CustomerId:  order.CustomerId,
@@ -87,7 +87,7 @@ func (or *OrderRepository) Create(ctx context.Context, order *domain.OrderReques
 	return newOrder, nil
 }
 
-func (or *OrderRepository) Update(ctx context.Context, id string, orderReq *domain.OrderRequest) (*domain.Order, error) {
+func (or *orderRepositoryImpl) Update(ctx context.Context, id string, orderReq *domain.OrderRequest) (*domain.Order, error) {
 	collection := or.Conn.Collection("orders")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
@@ -122,7 +122,7 @@ func (or *OrderRepository) Update(ctx context.Context, id string, orderReq *doma
 
 	return &updatedOrder, nil
 }
-func (or *OrderRepository) Delete(ctx context.Context, id string) (*domain.Order, error) {
+func (or *orderRepositoryImpl) Delete(ctx context.Context, id string) (*domain.Order, error) {
 	collection := or.Conn.Collection("orders")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {

@@ -94,6 +94,23 @@ Use the following stack:
 
 ### Endpoints
 
+* `POST /carts`: Create a new cart
+* `GET /carts`: Get list of orders
+* `GET /carts/:id`: Get cart by id
+* `GET /carts/:customerId`: Get cart by customerId
+* `PUT /carts/:id`: Update cart
+* `DELETE /carts/:id`: Delete cart
+
+#### Model
+
+```json
+{
+  "id": "string",
+  "customerId": "string",
+  "productIds": ["string"],
+  "totalAmount": 200000,
+}
+```
 ## 📃 Technical Requirements
 
 * Use **Gin** for HTTP routing and handling

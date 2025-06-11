@@ -1,33 +1,24 @@
 package handler
 
 import (
-	"context"
 	"intern-project-v2/domain"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type CustomerUsecase interface {
-	GetAll(ctx context.Context) ([]*domain.Customer, error)
-	GetByID(ctx context.Context, id string) (*domain.Customer, error)
-	Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error)
-	Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error)
-	Delete(ctx context.Context, id string) (*domain.Customer, error)
+type customerHandler struct {
+	customerUsecase domain.CustomerUsecase
 }
 
-type CustomerHandler struct {
-	customerUsecase CustomerUsecase
-}
-
-func NewCustomerHandler(customerUsecase CustomerUsecase) *CustomerHandler {
-	return &CustomerHandler{
+func NewCustomerHandler(customerUsecase domain.CustomerUsecase) *customerHandler {
+	return &customerHandler{
 		customerUsecase: customerUsecase,
 	}
 
 }
 
-func (ch *CustomerHandler) GetAll(c *gin.Context) {
+func (ch *customerHandler) GetAll(c *gin.Context) {
 	customers, err := ch.customerUsecase.GetAll(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve customers"})
@@ -42,7 +33,7 @@ func (ch *CustomerHandler) GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, customers)
 }
 
-func (ch *CustomerHandler) GetByID(c *gin.Context) {
+func (ch *customerHandler) GetByID(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})
@@ -64,7 +55,7 @@ func (ch *CustomerHandler) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, customer)
 }
 
-func (ch *CustomerHandler) Create(c *gin.Context) {
+func (ch *customerHandler) Create(c *gin.Context) {
 	var customerReq domain.CustomerRequest
 	if err := c.ShouldBindJSON(&customerReq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
@@ -83,7 +74,7 @@ func (ch *CustomerHandler) Create(c *gin.Context) {
 		"customer": customer})
 }
 
-func (ch *CustomerHandler) Update(c *gin.Context) {
+func (ch *customerHandler) Update(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})
@@ -114,7 +105,7 @@ func (ch *CustomerHandler) Update(c *gin.Context) {
 		"customer": customer})
 }
 
-func (ch *CustomerHandler) Delete(c *gin.Context) {
+func (ch *customerHandler) Delete(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})

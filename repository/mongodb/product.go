@@ -10,17 +10,17 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-type ProductRepository struct {
+type productRepositoryImpl struct {
 	Conn *mongo.Database
 }
 
-func NewProductRepository(db *mongo.Database) *ProductRepository {
-	return &ProductRepository{
+func NewProductRepository(db *mongo.Database) *productRepositoryImpl {
+	return &productRepositoryImpl{
 		Conn: db,
 	}
 }
 
-func (pr *ProductRepository) GetAll(ctx context.Context) ([]*domain.Product, error) {
+func (pr *productRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Product, error) {
 	collection := pr.Conn.Collection("products")
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
@@ -44,7 +44,7 @@ func (pr *ProductRepository) GetAll(ctx context.Context) ([]*domain.Product, err
 	return products, nil
 }
 
-func (pr *ProductRepository) GetByID(ctx context.Context, id string) (*domain.Product, error) {
+func (pr *productRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Product, error) {
 	collection := pr.Conn.Collection("products")
 	var product domain.Product
 	objectID, err := bson.ObjectIDFromHex(id)
@@ -63,7 +63,7 @@ func (pr *ProductRepository) GetByID(ctx context.Context, id string) (*domain.Pr
 	return &product, nil
 }
 
-func (pr *ProductRepository) Create(ctx context.Context, product *domain.ProductRequest) (*domain.Product, error) {
+func (pr *productRepositoryImpl) Create(ctx context.Context, product *domain.ProductRequest) (*domain.Product, error) {
 	collection := pr.Conn.Collection("products")
 	result, err := collection.InsertOne(ctx, product)
 	if err != nil {
@@ -83,7 +83,7 @@ func (pr *ProductRepository) Create(ctx context.Context, product *domain.Product
 	return createdProduct, nil
 }
 
-func (pr *ProductRepository) Update(ctx context.Context, id string, productReq *domain.ProductRequest) (*domain.Product, error) {
+func (pr *productRepositoryImpl) Update(ctx context.Context, id string, productReq *domain.ProductRequest) (*domain.Product, error) {
 	collection := pr.Conn.Collection("products")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
@@ -119,7 +119,7 @@ func (pr *ProductRepository) Update(ctx context.Context, id string, productReq *
 	return &updatedProduct, nil
 }
 
-func (pr *ProductRepository) Delete(ctx context.Context, id string) (*domain.Product, error) {
+func (pr *productRepositoryImpl) Delete(ctx context.Context, id string) (*domain.Product, error) {
 	collection := pr.Conn.Collection("products")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
