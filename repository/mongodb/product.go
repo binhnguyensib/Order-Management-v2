@@ -10,18 +10,20 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
+var _ domain.ProductRepository = (*productRepositoryImpl)(nil)
+
 type productRepositoryImpl struct {
-	Conn *mongo.Database
+	conn *mongo.Database
 }
 
 func NewProductRepository(db *mongo.Database) *productRepositoryImpl {
 	return &productRepositoryImpl{
-		Conn: db,
+		conn: db,
 	}
 }
 
 func (pr *productRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Product, error) {
-	collection := pr.Conn.Collection("products")
+	collection := pr.conn.Collection("products")
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, err
@@ -45,7 +47,7 @@ func (pr *productRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Product,
 }
 
 func (pr *productRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Product, error) {
-	collection := pr.Conn.Collection("products")
+	collection := pr.conn.Collection("products")
 	var product domain.Product
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
@@ -64,7 +66,7 @@ func (pr *productRepositoryImpl) GetByID(ctx context.Context, id string) (*domai
 }
 
 func (pr *productRepositoryImpl) Create(ctx context.Context, product *domain.ProductRequest) (*domain.Product, error) {
-	collection := pr.Conn.Collection("products")
+	collection := pr.conn.Collection("products")
 	result, err := collection.InsertOne(ctx, product)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create product: %v", err)
@@ -84,7 +86,7 @@ func (pr *productRepositoryImpl) Create(ctx context.Context, product *domain.Pro
 }
 
 func (pr *productRepositoryImpl) Update(ctx context.Context, id string, productReq *domain.ProductRequest) (*domain.Product, error) {
-	collection := pr.Conn.Collection("products")
+	collection := pr.conn.Collection("products")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("invalid ID format: %s", id)
@@ -120,7 +122,7 @@ func (pr *productRepositoryImpl) Update(ctx context.Context, id string, productR
 }
 
 func (pr *productRepositoryImpl) Delete(ctx context.Context, id string) (*domain.Product, error) {
-	collection := pr.Conn.Collection("products")
+	collection := pr.conn.Collection("products")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("invalid ID format: %s", id)

@@ -94,12 +94,11 @@ Use the following stack:
 
 ### Endpoints
 
-* `POST /carts`: Create a new cart
-* `GET /carts`: Get list of orders
-* `GET /carts/:id`: Get cart by id
-* `GET /carts/:customerId`: Get cart by customerId
-* `PUT /carts/:id`: Update cart
-* `DELETE /carts/:id`: Delete cart
+* `POST /customers/:customerId/carts/items`: Add item to cart 
+* `GET /customers/:customerId/carts/`: Get cart by customerId
+* `PUT /customers/:customerId/carts/items/`: Update cart Item 
+* `DELETE /customers/:customerId/carts/items/:productId`: Remove Item from cart
+* `DELETE /customers/:customerId/carts/`: Clear cart
 
 #### Model
 
@@ -107,8 +106,9 @@ Use the following stack:
 {
   "id": "string",
   "customerId": "string",
-  "productIds": ["string"],
-  "totalAmount": 200000,
+  "items": [CartITem],
+  "totalItems": 20,
+  "TotalPrice": 50000
 }
 ```
 ## 📃 Technical Requirements

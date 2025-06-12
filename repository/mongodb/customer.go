@@ -9,18 +9,20 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
+var _ domain.CustomerRepository = (*customerRepositoryImpl)(nil)
+
 type customerRepositoryImpl struct {
-	Conn *mongo.Database
+	conn *mongo.Database
 }
 
 func NewCustomerRepository(db *mongo.Database) *customerRepositoryImpl {
 	return &customerRepositoryImpl{
-		Conn: db,
+		conn: db,
 	}
 }
 
 func (cr *customerRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Customer, error) {
-	collection := cr.Conn.Collection("customers")
+	collection := cr.conn.Collection("customers")
 	cursor, err := collection.Find(context.TODO(), bson.M{})
 	if err != nil {
 		return nil, err
@@ -40,7 +42,7 @@ func (cr *customerRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Custome
 }
 
 func (cr *customerRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Customer, error) {
-	collection := cr.Conn.Collection("customers")
+	collection := cr.conn.Collection("customers")
 	var customer domain.Customer
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
@@ -57,7 +59,7 @@ func (cr *customerRepositoryImpl) GetByID(ctx context.Context, id string) (*doma
 }
 
 func (cr *customerRepositoryImpl) Create(ctx context.Context, customer *domain.CustomerRequest) (*domain.Customer, error) {
-	collection := cr.Conn.Collection("customers")
+	collection := cr.conn.Collection("customers")
 	result, err := collection.InsertOne(ctx, customer)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create customer: %v", err)
@@ -79,7 +81,7 @@ func (cr *customerRepositoryImpl) Create(ctx context.Context, customer *domain.C
 }
 
 func (cr *customerRepositoryImpl) Update(ctx context.Context, id string, customerReq *domain.CustomerRequest) (*domain.Customer, error) {
-	collection := cr.Conn.Collection("customers")
+	collection := cr.conn.Collection("customers")
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
 		return nil, fmt.Errorf("invalid ID format: %s", id)
@@ -111,7 +113,7 @@ func (cr *customerRepositoryImpl) Update(ctx context.Context, id string, custome
 }
 
 func (cr *customerRepositoryImpl) Delete(ctx context.Context, id string) (*domain.Customer, error) {
-	collection := cr.Conn.Collection("customers")
+	collection := cr.conn.Collection("customers")
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
 		return nil, fmt.Errorf("invalid ID format: %s", id)

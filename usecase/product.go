@@ -5,6 +5,8 @@ import (
 	"intern-project-v2/domain"
 )
 
+var _ domain.ProductUsecase = (*productUsecaseImpl)(nil)
+
 type productUsecaseImpl struct {
 	productRepo domain.ProductRepository
 }

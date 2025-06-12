@@ -37,6 +37,10 @@ func Run() {
 	orderUsecase := usecase.NewOrderUsecase(orderRepo)
 	orderHandler := handler.NewOrderHandler(orderUsecase)
 
+	cartRepo := mongodb.NewCartRepository(db.DB)
+	cartUsecase := usecase.NewCartUsecase(cartRepo, productRepo, customerRepo)
+	cartHandler := handler.NewCartHandler(cartUsecase)
+
 	router := gin.Default()
 
 	router.Use(gin.Logger())
@@ -74,6 +78,14 @@ func Run() {
 			orders.POST("/", orderHandler.Create)
 			orders.PUT("/:id", orderHandler.Update)
 			orders.DELETE("/:id", orderHandler.Delete)
+		}
+		carts := customers.Group("/:id")
+		{
+			carts.POST("/cart/item", cartHandler.AddToCart)
+			carts.GET("/cart", cartHandler.GetCartByCustomerId)
+			carts.PUT("/cart/item", cartHandler.UpdateCartItem)
+			carts.DELETE("/cart/item/:product_id", cartHandler.RemoveCartItem)
+			carts.DELETE("/cart", cartHandler.ClearCart)
 		}
 	}
 	port := os.Getenv("PORT")

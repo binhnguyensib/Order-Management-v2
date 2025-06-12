@@ -5,6 +5,8 @@ import (
 	"intern-project-v2/domain"
 )
 
+var _ domain.OrderUsecase = (*orderUsecaseImpl)(nil)
+
 type orderUsecaseImpl struct {
 	orderRepo domain.OrderRepository
 }

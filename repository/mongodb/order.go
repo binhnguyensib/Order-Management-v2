@@ -12,18 +12,20 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
+var _ domain.OrderRepository = (*orderRepositoryImpl)(nil)
+
 type orderRepositoryImpl struct {
-	Conn *mongo.Database
+	conn *mongo.Database
 }
 
 func NewOrderRepository(db *mongo.Database) *orderRepositoryImpl {
 	return &orderRepositoryImpl{
-		Conn: db,
+		conn: db,
 	}
 }
 
 func (or *orderRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Order, error) {
-	collection := or.Conn.Collection("orders")
+	collection := or.conn.Collection("orders")
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, err
@@ -47,7 +49,7 @@ func (or *orderRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Order, err
 }
 
 func (or *orderRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Order, error) {
-	collection := or.Conn.Collection("orders")
+	collection := or.conn.Collection("orders")
 	var order domain.Order
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
@@ -66,7 +68,7 @@ func (or *orderRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.
 }
 
 func (or *orderRepositoryImpl) Create(ctx context.Context, order *domain.OrderRequest) (*domain.Order, error) {
-	collection := or.Conn.Collection("orders")
+	collection := or.conn.Collection("orders")
 	newOrder := &domain.Order{
 		CustomerId:  order.CustomerId,
 		ProductIds:  order.ProductIds,
@@ -88,7 +90,7 @@ func (or *orderRepositoryImpl) Create(ctx context.Context, order *domain.OrderRe
 }
 
 func (or *orderRepositoryImpl) Update(ctx context.Context, id string, orderReq *domain.OrderRequest) (*domain.Order, error) {
-	collection := or.Conn.Collection("orders")
+	collection := or.conn.Collection("orders")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("invalid ID format: %s", id)
@@ -123,7 +125,7 @@ func (or *orderRepositoryImpl) Update(ctx context.Context, id string, orderReq *
 	return &updatedOrder, nil
 }
 func (or *orderRepositoryImpl) Delete(ctx context.Context, id string) (*domain.Order, error) {
-	collection := or.Conn.Collection("orders")
+	collection := or.conn.Collection("orders")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, fmt.Errorf("invalid ID format: %s", id)
