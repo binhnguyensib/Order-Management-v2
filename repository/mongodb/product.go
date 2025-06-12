@@ -16,7 +16,7 @@ type productRepositoryImpl struct {
 	conn *mongo.Database
 }
 
-func NewProductRepository(db *mongo.Database) *productRepositoryImpl {
+func NewProductRepository(db *mongo.Database) domain.ProductRepository {
 	return &productRepositoryImpl{
 		conn: db,
 	}

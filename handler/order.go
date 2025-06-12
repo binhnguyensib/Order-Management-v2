@@ -17,6 +17,16 @@ func NewOrderHandler(orderUsecase domain.OrderUsecase) *orderHandler {
 	}
 }
 
+// GetAll godoc
+// @Summary Get all orders
+// @Description Retrieve all orders
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Success 200 {array} domain.Order
+// @Failure 500
+// @Failure 400
+// @Router /orders [get]
 func (oh *orderHandler) GetAll(c *gin.Context) {
 	ctx := c.Request.Context()
 	orders, err := oh.orderUsecase.GetAll(ctx)
@@ -34,6 +44,17 @@ func (oh *orderHandler) GetAll(c *gin.Context) {
 			"orders":  orders})
 }
 
+// GetByID godoc
+// @Summary Get order by ID
+// @Description Retrieve an order by its ID
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Param id path string true "Order ID"
+// @Success 200 {object} domain.Order
+// @Failure 400
+// @Failure 500
+// @Router /orders/{id} [get]
 func (oh *orderHandler) GetByID(c *gin.Context) {
 	ctx := c.Request.Context()
 	orderID := c.Param("id")
@@ -57,6 +78,17 @@ func (oh *orderHandler) GetByID(c *gin.Context) {
 		})
 }
 
+// Create godoc
+// @Summary Create a new order
+// @Description Create a new order with the provided details
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Param order body domain.OrderRequest true "Order Request"
+// @Success 201 {object} domain.Order
+// @Failure 400
+// @Failure 500
+// @Router /orders [post]
 func (oh *orderHandler) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var orderReq domain.OrderRequest
@@ -72,6 +104,18 @@ func (oh *orderHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, order)
 }
 
+// Update godoc
+// @Summary Update an existing order
+// @Description Update an order with the provided details
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Param id path string true "Order ID"
+// @Param order body domain.OrderRequest true "Order Request"
+// @Success 200 {object} domain.Order
+// @Failure 400
+// @Failure 500
+// @Router /orders/{id} [put]
 func (oh *orderHandler) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	orderID := c.Param("id")
@@ -96,6 +140,17 @@ func (oh *orderHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Order updated successfully", "order": order})
 }
 
+// Delete godoc
+// @Summary Delete an order
+// @Description Delete an order by its ID
+// @Tags Orders
+// @Accept json
+// @Produce json
+// @Param id path string true "Order ID"
+// @Success 200
+// @Failure 400
+// @Failure 500
+// @Router /orders/{id} [delete]
 func (oh *orderHandler) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	orderID := c.Param("id")

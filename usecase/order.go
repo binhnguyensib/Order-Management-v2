@@ -11,7 +11,7 @@ type orderUsecaseImpl struct {
 	orderRepo domain.OrderRepository
 }
 
-func NewOrderUsecase(orderRepo domain.OrderRepository) *orderUsecaseImpl {
+func NewOrderUsecase(orderRepo domain.OrderRepository) domain.OrderUsecase {
 	return &orderUsecaseImpl{
 		orderRepo: orderRepo,
 	}

@@ -15,7 +15,7 @@ type customerRepositoryImpl struct {
 	conn *mongo.Database
 }
 
-func NewCustomerRepository(db *mongo.Database) *customerRepositoryImpl {
+func NewCustomerRepository(db *mongo.Database) domain.CustomerRepository {
 	return &customerRepositoryImpl{
 		conn: db,
 	}

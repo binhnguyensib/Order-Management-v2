@@ -17,7 +17,7 @@ func NewCartUsecase(
 	cartRepo domain.CartRepository,
 	productRepo domain.ProductRepository,
 	customerRepo domain.CustomerRepository,
-) *cartUsecaseImpl {
+) domain.CartUsecase {
 	return &cartUsecaseImpl{
 		cartRepo:     cartRepo,
 		productRepo:  productRepo,

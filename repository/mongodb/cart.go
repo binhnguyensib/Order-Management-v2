@@ -13,7 +13,7 @@ type cartRepositoryImpl struct {
 	conn *mongo.Database
 }
 
-func NewCartRepository(db *mongo.Database) *cartRepositoryImpl {
+func NewCartRepository(db *mongo.Database) domain.CartRepository {
 	return &cartRepositoryImpl{
 		conn: db,
 	}

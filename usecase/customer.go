@@ -11,7 +11,7 @@ type customerUsecaseImpl struct {
 	customerRepo domain.CustomerRepository
 }
 
-func NewCustomerUsecase(customerRepo domain.CustomerRepository) *customerUsecaseImpl {
+func NewCustomerUsecase(customerRepo domain.CustomerRepository) domain.CustomerUsecase {
 	return &customerUsecaseImpl{
 		customerRepo: customerRepo,
 	}

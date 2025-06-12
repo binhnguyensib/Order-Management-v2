@@ -2,6 +2,7 @@ package app
 
 import (
 	"intern-project-v2/config"
+	_ "intern-project-v2/docs"
 	"intern-project-v2/handler"
 	"intern-project-v2/repository/mongodb"
 	"intern-project-v2/usecase"
@@ -9,8 +10,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title Order Management API
+// @version 2.0
+// @description This is a sample server for managing orders, customers, products, and carts.
+// @host localhost:8080
+// @BasePath /api
 func init() {
 	err := godotenv.Load()
 	if err != nil {
@@ -52,6 +60,7 @@ func Run() {
 			"message": "API is running",
 		})
 	})
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	api := router.Group("/api")
 	{
@@ -88,6 +97,7 @@ func Run() {
 			carts.DELETE("/cart", cartHandler.ClearCart)
 		}
 	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

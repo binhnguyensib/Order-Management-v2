@@ -18,7 +18,7 @@ type orderRepositoryImpl struct {
 	conn *mongo.Database
 }
 
-func NewOrderRepository(db *mongo.Database) *orderRepositoryImpl {
+func NewOrderRepository(db *mongo.Database) domain.OrderRepository {
 	return &orderRepositoryImpl{
 		conn: db,
 	}

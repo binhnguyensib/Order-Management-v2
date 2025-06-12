@@ -11,7 +11,7 @@ type productUsecaseImpl struct {
 	productRepo domain.ProductRepository
 }
 
-func NewProductUsecase(productRepo domain.ProductRepository) *productUsecaseImpl {
+func NewProductUsecase(productRepo domain.ProductRepository) domain.ProductUsecase {
 	return &productUsecaseImpl{
 		productRepo: productRepo,
 	}

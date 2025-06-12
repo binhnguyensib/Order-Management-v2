@@ -17,6 +17,16 @@ func NewProductHandler(productUsecase domain.ProductUsecase) *productHandler {
 	}
 }
 
+// GetAll godoc
+// @Summary Get all products
+// @Description Retrieve all products
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Success 200 {array} domain.Product
+// @Failure 500
+// @Failure 400
+// @Router /products [get]
 func (ph *productHandler) GetAll(c *gin.Context) {
 	ctx := c.Request.Context()
 	products, err := ph.productUsecase.GetAll(ctx)
@@ -33,6 +43,17 @@ func (ph *productHandler) GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, products)
 }
 
+// GetByID godoc
+// @Summary Get product by ID
+// @Description Retrieve a product by its ID
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param id path string true "Product ID"
+// @Success 200 {object} domain.Product
+// @Failure 400
+// @Failure 500
+// @Router /products/{id} [get]
 func (ph *productHandler) GetByID(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -55,6 +76,17 @@ func (ph *productHandler) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, product)
 }
 
+// Create godoc
+// @Summary Create a new product
+// @Description Create a new product with the provided details
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param product body domain.ProductRequest true "Product Request"
+// @Success 201 {object} domain.Product
+// @Failure 400
+// @Failure 500
+// @Router /products [post]
 func (ph *productHandler) Create(c *gin.Context) {
 	var productReq domain.ProductRequest
 	if err := c.ShouldBindJSON(&productReq); err != nil {
@@ -72,6 +104,18 @@ func (ph *productHandler) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, product)
 }
 
+// Update godoc
+// @Summary Update an existing product
+// @Description Update a product with the provided details
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param id path string true "Product ID"
+// @Param product body domain.ProductRequest true "Product Request"
+// @Success 200 {object} domain.Product
+// @Failure 400
+// @Failure 500
+// @Router /products/{id} [put]
 func (ph *productHandler) Update(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -103,6 +147,17 @@ func (ph *productHandler) Update(c *gin.Context) {
 	})
 }
 
+// Delete godoc
+// @Summary Delete a product
+// @Description Delete a product by its ID
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param id path string true "Product ID"
+// @Success 200
+// @Failure 400
+// @Failure 500
+// @Router /products/{id} [delete]
 func (ph *productHandler) Delete(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {

@@ -16,6 +16,18 @@ func NewCartHandler(cartUsecase domain.CartUsecase) *cartHandler {
 	}
 }
 
+// AddToCart godoc
+// @Summary Add item to cart
+// @Description Add a product to the customer's cart
+// @Tags Cart
+// @Accept json
+// @Produce json
+// @Param id path string true "Customer ID"
+// @Param cartItem body domain.CartItemRequest true "Cart Item Request"
+// @Success 200 {object} domain.Cart
+// @Failure 400
+// @Failure 500
+// @Router /customers/{id}/cart [post]
 func (ch *cartHandler) AddToCart(c *gin.Context) {
 	ctx := c.Request.Context()
 	customerID := c.Param("id")
@@ -32,6 +44,17 @@ func (ch *cartHandler) AddToCart(c *gin.Context) {
 	c.JSON(200, cart)
 }
 
+// GetCartByCustomerId godoc
+// @Summary Get cart by customer ID
+// @Description Retrieve the cart for a specific customer
+// @Tags Cart
+// @Accept json
+// @Produce json
+// @Param id path string true "Customer ID"
+// @Success 200 {object} domain.Cart
+// @Failure 500
+// @Failure 400
+// @Router /customers/{id}/cart [get]
 func (ch *cartHandler) GetCartByCustomerId(c *gin.Context) {
 	ctx := c.Request.Context()
 	customerID := c.Param("id")
@@ -43,6 +66,18 @@ func (ch *cartHandler) GetCartByCustomerId(c *gin.Context) {
 	c.JSON(200, cart)
 }
 
+// AddToCart godoc
+// @Summary Add item to cart
+// @Description Add a product to the customer's cart
+// @Tags Cart
+// @Accept json
+// @Produce json
+// @Param id path string true "Customer ID"
+// @Param cartItem body domain.CartItemRequest true "Cart Item Request"
+// @Success 200 {object} domain.Cart
+// @Failure 400
+// @Failure 500
+// @Router /customers/{id}/cart [post]
 func (ch *cartHandler) UpdateCartItem(c *gin.Context) {
 	ctx := c.Request.Context()
 	customerID := c.Param("id")
@@ -59,6 +94,18 @@ func (ch *cartHandler) UpdateCartItem(c *gin.Context) {
 	c.JSON(200, cart)
 }
 
+// RemoveCartItem godoc
+// @Summary Remove item from cart
+// @Description Remove a product from the customer's cart
+// @Tags Cart
+// @Accept json
+// @Produce json
+// @Param id path string true "Customer ID"
+// @Param product_id path string true "Product ID"
+// @Success 200 {object} domain.Cart
+// @Failure 400
+// @Failure 500
+// @Router /customers/{id}/cart/{product_id} [delete]
 func (ch *cartHandler) RemoveCartItem(c *gin.Context) {
 	ctx := c.Request.Context()
 	customerID := c.Param("id")
@@ -71,6 +118,16 @@ func (ch *cartHandler) RemoveCartItem(c *gin.Context) {
 	c.JSON(200, cart)
 }
 
+// ClearCart godoc
+// @Summary Clear cart
+// @Description Clear all items from the customer's cart
+// @Tags Cart
+// @Accept json
+// @Produce json
+// @Param id path string true "Customer ID"
+// @Success 200
+// @Failure 500
+// @Router /customers/{id}/cart [delete]
 func (ch *cartHandler) ClearCart(c *gin.Context) {
 	ctx := c.Request.Context()
 	customerID := c.Param("id")
