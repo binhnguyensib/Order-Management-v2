@@ -27,6 +27,7 @@ func init() {
 }
 
 func Run() {
+
 	db, err := config.ConnectDB()
 	{
 		if err != nil {

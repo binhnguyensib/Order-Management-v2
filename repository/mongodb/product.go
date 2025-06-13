@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"intern-project-v2/domain"
+	"intern-project-v2/logger"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -51,13 +52,15 @@ func (pr *productRepositoryImpl) GetByID(ctx context.Context, id string) (*domai
 	var product domain.Product
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		logger.Error("Invalid ID format", "id", id, "error", err)
+		return nil, err
 	}
 
 	err = collection.FindOne(ctx, bson.M{"_id": objectID}).Decode(&product)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("product with ID %s not found", id)
+			logger.Error("Product not found", "id", id)
+			return nil, err
 		}
 		return nil, err
 	}
@@ -69,11 +72,13 @@ func (pr *productRepositoryImpl) Create(ctx context.Context, product *domain.Pro
 	collection := pr.conn.Collection("products")
 	result, err := collection.InsertOne(ctx, product)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create product: %v", err)
+		logger.Error("Failed to create product", "error", err)
+		return nil, err
 	}
 	productID, ok := result.InsertedID.(bson.ObjectID)
 	if !ok {
-		return nil, fmt.Errorf("failed to convert inserted ID to ObjectID")
+		logger.Error("Failed to convert inserted ID to ObjectID", "insertedID", result.InsertedID)
+		return nil, fmt.Errorf("failed to convert inserted ID to ObjectID: %v", result.InsertedID)
 	}
 
 	createdProduct := &domain.Product{
@@ -89,7 +94,8 @@ func (pr *productRepositoryImpl) Update(ctx context.Context, id string, productR
 	collection := pr.conn.Collection("products")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		logger.Error("Invalid ID format", "id", id, "error", err)
+		return nil, err
 	}
 
 	updateFields := bson.M{}
@@ -107,14 +113,17 @@ func (pr *productRepositoryImpl) Update(ctx context.Context, id string, productR
 	otps := options.FindOneAndUpdate().SetReturnDocument(options.After)
 	result := collection.FindOneAndUpdate(ctx, bson.M{"_id": objectID}, update, otps)
 	if result.Err() != nil {
+
 		if result.Err() == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("product with ID %s not found", id)
+			logger.Error("Product not found", "id", id)
+			return nil, err
 		}
 		return nil, result.Err()
 	}
 
 	var updatedProduct domain.Product
 	if err := result.Decode(&updatedProduct); err != nil {
+		logger.Error("Failed to decode updated product", "id", id, "error", err)
 		return nil, err
 	}
 
@@ -125,13 +134,15 @@ func (pr *productRepositoryImpl) Delete(ctx context.Context, id string) (*domain
 	collection := pr.conn.Collection("products")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		logger.Error("Invalid ID format", "id", id, "error", err)
+		return nil, err
 	}
 
 	result := collection.FindOneAndDelete(ctx, bson.M{"_id": objectID})
 	if result.Err() != nil {
 		if result.Err() == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("product with ID %s not found", id)
+			logger.Error("Product not found for deletion", "id", id)
+			return nil, err
 		}
 		return nil, result.Err()
 	}

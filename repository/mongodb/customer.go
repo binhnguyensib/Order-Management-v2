@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"intern-project-v2/domain"
+	"intern-project-v2/logger"
+	"log"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -32,7 +34,6 @@ func (cr *customerRepositoryImpl) GetAll(ctx context.Context) ([]*domain.Custome
 	for cursor.Next(context.TODO()) {
 		var customer domain.Customer
 		if err := cursor.Decode(&customer); err != nil {
-			fmt.Printf("cusomter %v", customer)
 			return nil, err
 		}
 		customers = append(customers, &customer)
@@ -46,12 +47,14 @@ func (cr *customerRepositoryImpl) GetByID(ctx context.Context, id string) (*doma
 	var customer domain.Customer
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		log.Printf("Error converting ID to ObjectID: %v", ok)
+		return nil, ok
 	}
 	err := collection.FindOne(ctx, bson.M{"_id": ObjectID}).Decode(&customer)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("customer with ID %s not found", id)
+			logger.Error("Customer not found", "id", id)
+			return nil, err
 		}
 		return nil, err
 	}
@@ -62,11 +65,12 @@ func (cr *customerRepositoryImpl) Create(ctx context.Context, customer *domain.C
 	collection := cr.conn.Collection("customers")
 	result, err := collection.InsertOne(ctx, customer)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create customer: %v", err)
+		logger.Error("Failed to create customer", "error", err)
+		return nil, err
 	}
 	customerID, ok := result.InsertedID.(bson.ObjectID)
-
 	if !ok {
+		logger.Error("Failed to convert inserted ID to ObjectID", "insertedID", result.InsertedID)
 		return nil, fmt.Errorf("failed to convert inserted ID to ObjectID")
 	}
 
@@ -84,7 +88,8 @@ func (cr *customerRepositoryImpl) Update(ctx context.Context, id string, custome
 	collection := cr.conn.Collection("customers")
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		log.Printf("Error converting ID to ObjectID: %v", ok)
+		return nil, ok
 	}
 
 	updateFields := bson.M{}
@@ -102,11 +107,13 @@ func (cr *customerRepositoryImpl) Update(ctx context.Context, id string, custome
 
 	result, err := collection.UpdateOne(ctx, bson.M{"_id": ObjectID}, update)
 	if err != nil {
-		return nil, fmt.Errorf("failed to update customer: %v", err)
+		logger.Error("Failed to update customer", "error", err)
+		return nil, err
 	}
 
 	if result.MatchedCount == 0 {
-		return nil, fmt.Errorf("customer with ID %s not found", id)
+		logger.Error("No customer found with the given ID", "id", id)
+		return nil, err
 	}
 
 	return cr.GetByID(ctx, id)
@@ -116,7 +123,8 @@ func (cr *customerRepositoryImpl) Delete(ctx context.Context, id string) (*domai
 	collection := cr.conn.Collection("customers")
 	ObjectID, ok := bson.ObjectIDFromHex(id)
 	if ok != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		log.Printf("Error converting ID to ObjectID: %v", ok)
+		return nil, ok
 	}
 
 	var deletedCustomer domain.Customer
@@ -124,9 +132,11 @@ func (cr *customerRepositoryImpl) Delete(ctx context.Context, id string) (*domai
 	err := collection.FindOneAndDelete(ctx, bson.M{"_id": ObjectID}).Decode(&deletedCustomer)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("customer with ID %s not found", id)
+			logger.Error("Customer not found for deletion", "id", id)
+			return nil, err
 		}
-		return nil, fmt.Errorf("failed to delete customer: %v", err)
+		logger.Error("Failed to delete customer", "error", err)
+		return nil, err
 	}
 	return &deletedCustomer, nil
 }

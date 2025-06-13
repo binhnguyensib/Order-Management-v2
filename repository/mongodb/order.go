@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"intern-project-v2/domain"
+	"intern-project-v2/logger"
 
 	"time"
 
@@ -53,13 +54,15 @@ func (or *orderRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.
 	var order domain.Order
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		logger.Error("Invalid ID format", "id", id, "error", err)
+		return nil, err
 	}
 
 	err = collection.FindOne(ctx, bson.M{"_id": objectID}).Decode(&order)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("order with ID %s not found", id)
+			logger.Error("Order not found", "id", id)
+			return nil, err
 		}
 		return nil, err
 	}
@@ -83,7 +86,8 @@ func (or *orderRepositoryImpl) Create(ctx context.Context, order *domain.OrderRe
 
 	insertedID, ok := result.InsertedID.(bson.ObjectID)
 	if !ok {
-		return nil, fmt.Errorf("failed to convert inserted ID to ObjectID")
+		logger.Error("Failed to convert inserted ID to ObjectID", "insertedID", result.InsertedID)
+		return nil, fmt.Errorf("failed to convert inserted ID to ObjectID: %v", result.InsertedID)
 	}
 	newOrder.Id = insertedID
 	return newOrder, nil
@@ -93,7 +97,8 @@ func (or *orderRepositoryImpl) Update(ctx context.Context, id string, orderReq *
 	collection := or.conn.Collection("orders")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		logger.Error("Invalid ID format", "id", id, "error", err)
+		return nil, err
 	}
 
 	updateFields := bson.M{}
@@ -112,14 +117,17 @@ func (or *orderRepositoryImpl) Update(ctx context.Context, id string, orderReq *
 	result := collection.FindOneAndUpdate(ctx, bson.M{"_id": objectID}, update, otps)
 	if result.Err() != nil {
 		if result.Err() == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("order with ID %s not found", id)
+			logger.Error("Order not found", "id", id)
+			return nil, err
 		}
-		return nil, fmt.Errorf("failed to update order: %v", result.Err())
+		logger.Error("Failed to update order", "id", id, "error", result.Err())
+		return nil, err
 	}
 
 	var updatedOrder domain.Order
 	if err := result.Decode(&updatedOrder); err != nil {
-		return nil, fmt.Errorf("failed to decode updated order: %v", err)
+		logger.Error("Failed to decode updated order", "id", id, "error", err)
+		return nil, err
 	}
 
 	return &updatedOrder, nil
@@ -128,20 +136,24 @@ func (or *orderRepositoryImpl) Delete(ctx context.Context, id string) (*domain.O
 	collection := or.conn.Collection("orders")
 	objectID, err := bson.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, fmt.Errorf("invalid ID format: %s", id)
+		logger.Error("Invalid ID format", "id", id, "error", err)
+		return nil, err
 	}
 
 	result := collection.FindOneAndDelete(ctx, bson.M{"_id": objectID})
 	if result.Err() != nil {
 		if result.Err() == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("order with ID %s not found", id)
+			logger.Error("Order not found for deletion", "id", id)
+			return nil, err
 		}
-		return nil, fmt.Errorf("failed to delete order: %v", result.Err())
+		logger.Error("Failed to delete order", "id", id, "error", result.Err())
+		return nil, err
 	}
 
 	var deletedOrder domain.Order
 	if err := result.Decode(&deletedOrder); err != nil {
-		return nil, fmt.Errorf("failed to decode deleted order: %v", err)
+		logger.Error("Failed to decode deleted order", "id", id, "error", err)
+		return nil, err
 	}
 
 	return &deletedOrder, nil

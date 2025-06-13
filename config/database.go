@@ -2,7 +2,7 @@ package config
 
 import (
 	"context"
-	"fmt"
+	"intern-project-v2/logger"
 	"os"
 
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -19,7 +19,6 @@ func ConnectDB() (*Database, error) {
 	// Load the MongoDB URI from the environment variable
 	mongoURI := os.Getenv("MONGODB_URI")
 	dbName := os.Getenv("MONGODB_DBNAME")
-	fmt.Print("Connecting to MongoDB... ")
 	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	opts := options.Client().ApplyURI(mongoURI).SetServerAPIOptions(serverAPI)
@@ -28,7 +27,7 @@ func ConnectDB() (*Database, error) {
 	if err != nil {
 		panic(err)
 	}
-
+	logger.Info("Connected to MongoDB")
 	db := client.Database(dbName)
 	return &Database{
 		Client: client,
@@ -42,7 +41,8 @@ func (d *Database) Ping() error {
 
 func (d *Database) Close() error {
 	if err := d.Client.Disconnect(context.TODO()); err != nil {
-		return fmt.Errorf("failed to disconnect from MongoDB: %v", err)
+		logger.Error("Failed to disconnect from MongoDB", "error", err)
+		return err
 	}
 	return nil
 }

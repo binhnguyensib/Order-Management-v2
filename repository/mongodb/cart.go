@@ -2,8 +2,8 @@ package mongodb
 
 import (
 	"context"
-	"fmt"
 	"intern-project-v2/domain"
+	"intern-project-v2/logger"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -20,12 +20,16 @@ func NewCartRepository(db *mongo.Database) domain.CartRepository {
 }
 
 func (cr *cartRepositoryImpl) AddToCart(ctx context.Context, customerID string, item *domain.CartItem) (*domain.Cart, error) {
-
+	logger.Info("Adding item to cart", "customerID", customerID, "item", item)
 	collection := cr.conn.Collection("carts")
 	var existingCart domain.Cart
 	err := collection.FindOne(ctx, bson.M{"customer_id": customerID}).Decode(&existingCart)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
+			logger.Info("Creating new cart for customer",
+				"customer_id", customerID,
+				"reason", "cart_not_found",
+			)
 			newCart := &domain.Cart{
 				CustomerID: customerID,
 				Items:      []*domain.CartItem{item},
@@ -34,15 +38,23 @@ func (cr *cartRepositoryImpl) AddToCart(ctx context.Context, customerID string, 
 			}
 			result, err := collection.InsertOne(ctx, newCart)
 			if err != nil {
-				return nil, fmt.Errorf("failed to create new cart: %v", err)
+				logger.Error("Failed to create new cart", "error", err)
+				return nil, err
 			}
 
 			if insertedId, ok := result.InsertedID.(bson.ObjectID); ok {
 				newCart.Id = insertedId
 			}
+			logger.Info("New cart created successfully",
+				"customer_id", customerID,
+				"cart_id", newCart.Id.Hex(),
+				"total_items", newCart.TotalItems,
+				"total_price", newCart.TotalPrice,
+			)
 			return newCart, nil
 		}
-		return nil, fmt.Errorf("failed to find cart for customer %s: %v", customerID, err)
+		logger.Error("Failed to find existing cart", "error", err)
+		return nil, err
 	}
 	found := false
 	for i, existingItem := range existingCart.Items {
@@ -60,7 +72,8 @@ func (cr *cartRepositoryImpl) AddToCart(ctx context.Context, customerID string, 
 	cr.recalCartTotals(&existingCart)
 	_, err = collection.UpdateOne(ctx, bson.M{"_id": existingCart.Id}, bson.M{"$set": existingCart})
 	if err != nil {
-		return nil, fmt.Errorf("failed to update cart: %v", err)
+		logger.Error("Failed to update existing cart", "error", err)
+		return nil, err
 	}
 	return &existingCart, nil
 
@@ -72,9 +85,11 @@ func (cr *cartRepositoryImpl) GetCartByCustomerId(ctx context.Context, customerI
 	err := collection.FindOne(ctx, bson.M{"customer_id": customerID}).Decode(&cart)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("customer's cart is empty")
+			logger.Error("Customer's cart is empty", "customer_id", customerID)
+			return nil, err
 		}
-		return nil, fmt.Errorf("failed to find cart for customer %s: %v", customerID, err)
+		logger.Error("Failed to find cart for customer", "customer_id", customerID, "error", err)
+		return nil, err
 	}
 	return &cart, nil
 }
@@ -85,9 +100,11 @@ func (cr *cartRepositoryImpl) UpdateCartItem(ctx context.Context, customerID str
 	err := collection.FindOne(ctx, bson.M{"customer_id": customerID}).Decode(&existingCart)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("customer's cart is empty")
+			logger.Error("Customer's cart is empty", "customer_id", customerID)
+			return nil, err
 		}
-		return nil, fmt.Errorf("failed to find cart for customer %s: %v", customerID, err)
+		logger.Error("Failed to find cart for customer", "customer_id", customerID, "error", err)
+		return nil, err
 	}
 
 	found := false
@@ -100,13 +117,15 @@ func (cr *cartRepositoryImpl) UpdateCartItem(ctx context.Context, customerID str
 		}
 	}
 	if !found {
-		return nil, fmt.Errorf("item with product ID %s not found in cart", item.ProductID)
+		logger.Error("Item not found in cart", "product_id", item.ProductID, "customer_id", customerID)
+		return nil, err
 	}
 
 	cr.recalCartTotals(&existingCart)
 	_, err = collection.UpdateOne(ctx, bson.M{"_id": existingCart.Id}, bson.M{"$set": existingCart})
 	if err != nil {
-		return nil, fmt.Errorf("failed to update cart: %v", err)
+		logger.Error("Failed to update cart", "error", err)
+		return nil, err
 	}
 	return &existingCart, nil
 }
@@ -117,9 +136,11 @@ func (cr *cartRepositoryImpl) RemoveCartItem(ctx context.Context, customerID str
 	err := collection.FindOne(ctx, bson.M{"customer_id": customerID}).Decode(&existingCart)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, fmt.Errorf("customer's cart is empty")
+			logger.Error("Customer's cart is empty", "customer_id", customerID)
+			return nil, err
 		}
-		return nil, fmt.Errorf("failed to find cart for customer %s: %v", customerID, err)
+		logger.Error("Failed to find cart for customer", "customer_id", customerID, "error", err)
+		return nil, err
 	}
 
 	var updatedItems []*domain.CartItem
@@ -130,7 +151,8 @@ func (cr *cartRepositoryImpl) RemoveCartItem(ctx context.Context, customerID str
 	}
 
 	if len(updatedItems) == len(existingCart.Items) {
-		return nil, fmt.Errorf("item with product ID %s not found in cart", productID)
+		logger.Error("Item not found in cart", "product_id", productID, "customer_id", customerID)
+		return nil, err
 	}
 
 	existingCart.Items = updatedItems
@@ -138,7 +160,8 @@ func (cr *cartRepositoryImpl) RemoveCartItem(ctx context.Context, customerID str
 
 	_, err = collection.UpdateOne(ctx, bson.M{"_id": existingCart.Id}, bson.M{"$set": existingCart})
 	if err != nil {
-		return nil, fmt.Errorf("failed to update cart: %v", err)
+		logger.Error("Failed to update cart after removing item", "error", err)
+		return nil, err
 	}
 	return &existingCart, nil
 }
@@ -147,10 +170,11 @@ func (cr *cartRepositoryImpl) ClearCart(ctx context.Context, customerID string) 
 	collection := cr.conn.Collection("carts")
 	result, err := collection.DeleteOne(ctx, bson.M{"customer_id": customerID})
 	if err != nil {
-		return fmt.Errorf("failed to clear cart for customer %s: %v", customerID, err)
+		logger.Error("Failed to clear cart for customer", "customer_id", customerID, "error", err)
+		return err
 	}
 	if result.DeletedCount == 0 {
-		fmt.Printf("customer's cart has already empty")
+		logger.Warn("Customer's cart is already empty", "customer_id", customerID)
 	}
 	return nil
 }
