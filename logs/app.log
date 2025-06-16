@@ -1,0 +1,59 @@
+time=2025-06-13T13:53:41.604+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-13T13:54:18.343+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-13T14:00:47.022+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-13T14:01:04.414+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-13T14:01:35.445+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-13T14:01:40.131+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T13:45:23.041+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T13:48:07.329+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request: %s %s from %s, Status: %d, Duration: %s" POST=/api/customers/ ::1=201 !BADKEY=384.3305ms
+time=2025-06-16T13:49:34.845+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T13:50:13.684+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T13:51:13.202+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg=Request: POST=path: /api/customers/=from: ::1=Status: !BADKEY=201 Duration:=394.0399ms
+time=2025-06-16T13:54:59.850+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T13:55:14.194+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Customer created successfully" customer="&{Id:ObjectID(\"684fbfd14711639d13793eac\") Name:Phuc Binh Email:phucbinh@gmail.com Phone:03786189400}"
+time=2025-06-16T13:55:14.195+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg=Request: POST=path: /api/customers/=from: ::1=Status: !BADKEY=201 Duration:=354.6464ms
+time=2025-06-16T13:57:45.326+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T13:57:54.496+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:02:54.499+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T14:07:54.500+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T14:12:54.501+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T14:15:16.013+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:19:15.873+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:19:33.142+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:19:33.596+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" !BADKEY="map[From:::1 Method:GET Path:/api/customers/684fbfd14711639d13793eac Request End:453.882 Response Size:103 Status Code:200 User-Agent:PostmanRuntime/7.44.0]"
+time=2025-06-16T14:22:04.643+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:22:47.782+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:22:49.345+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:22:49.723+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" !BADKEY="map[From:::1 Method:GET Path:/api/customers/684fbfd14711639d13793eac Request End:377.85ms Response Size:103B Status Code:200 User-Agent:PostmanRuntime/7.44.0]"
+time=2025-06-16T14:23:44.124+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:24:04.761+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:24:05.143+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" !BADKEY="map[From:::1 Method:GET Path:/api/customers/684fbfd14711639d13793eac Response Size:103B Status Code:200 Time:382.11ms User-Agent:PostmanRuntime/7.44.0]"
+time=2025-06-16T14:27:01.376+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:27:08.827+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:27:15.613+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:27:18.661+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:27:19.004+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=343.32ms Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=103B
+time=2025-06-16T14:30:45.526+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:31:04.682+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:31:21.381+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:31:21.678+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=296.36ms Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=103B
+time=2025-06-16T14:31:23.402+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:31:23.440+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=37.62ms Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=103B
+time=2025-06-16T14:31:25.063+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:31:25.102+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=37.70ms Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=103B
+time=2025-06-16T14:31:25.966+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:31:26.004+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=38.23ms Method:=GET Path:=/api/customers/684fbfd14711639d13793eac From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=103B
+time=2025-06-16T14:31:27.974+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Rate limit exceeded" IP=::1 Count=4 ResetTime=2025-06-16T14:32:21.381+07:00
+time=2025-06-16T14:36:04.687+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T14:41:04.690+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T14:43:09.175+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request started" Method:=POST Path:=/api/customers/ From:=::1 User-Agent:=PostmanRuntime/7.44.0
+time=2025-06-16T14:43:09.228+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Customer created successfully" customer="&{Id:ObjectID(\"684fcb0ddf5ac4871bb62d51\") Name:Phuc Binh Email:phucbinh@gmail.com Phone:03786189400}"
+time=2025-06-16T14:43:09.229+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=54.41ms Method:=POST Path:=/api/customers/ From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=201 "Response Size:"=158B
+time=2025-06-16T14:44:02.877+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:44:06.598+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Customer created successfully" customer="&{Id:ObjectID(\"684fcb4629a10b554f6dc5a7\") Name:Phuc Binh Email:phucbinh@gmail.com Phone:03786189400}"
+time=2025-06-16T14:44:06.599+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=336.39ms Method:=POST Path:=/api/customers/ From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=201 "Response Size:"=158B
+time=2025-06-16T14:45:59.739+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:46:04.574+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:51:04.576+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T14:55:34.074+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T14:55:52.901+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"

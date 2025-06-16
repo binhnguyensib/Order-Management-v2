@@ -2,6 +2,7 @@ package handler
 
 import (
 	"intern-project-v2/domain"
+	"intern-project-v2/logger"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -100,7 +101,7 @@ func (ch *customerHandler) Create(c *gin.Context) {
 			"error":   "Failed to create customer",
 			"details": err.Error()})
 	}
-
+	logger.Info("Customer created successfully", "customer", customer)
 	c.JSON(http.StatusCreated, gin.H{
 		"message":  "Customer created successfully",
 		"customer": customer})
@@ -147,6 +148,7 @@ func (ch *customerHandler) Update(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "Customer updated successfully",
 		"customer": customer})
+	logger.Info("Customer updated successfully", "customer", customer)
 }
 
 // Delete godoc
@@ -183,4 +185,5 @@ func (ch *customerHandler) Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "Customer deleted successfully",
 		"customer": customer})
+	logger.Info("Customer deleted successfully", "customer", customer)
 }

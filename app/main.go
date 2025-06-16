@@ -4,10 +4,12 @@ import (
 	"intern-project-v2/config"
 	_ "intern-project-v2/docs"
 	"intern-project-v2/handler"
+	"intern-project-v2/middleware"
 	"intern-project-v2/repository/mongodb"
 	"intern-project-v2/usecase"
 	"os"
 
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
@@ -54,6 +56,11 @@ func Run() {
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+
+	router.Use(middleware.SetupCORS())
+	router.Use(middleware.RateLimit(3))
+	router.Use(middleware.RequestLogging())
+	router.Use(gzip.Gzip(gzip.DefaultCompression))
 
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{
