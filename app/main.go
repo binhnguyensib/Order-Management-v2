@@ -52,6 +52,10 @@ func Run() {
 	cartUsecase := usecase.NewCartUsecase(cartRepo, productRepo, customerRepo)
 	cartHandler := handler.NewCartHandler(cartUsecase)
 
+	authRepo := mongodb.NewAuthRepository(db.DB)
+	authUsecase := usecase.NewAuthUsecase(authRepo)
+	authHandler := handler.NewAuthHandler(authUsecase)
+
 	router := gin.Default()
 
 	router.Use(gin.Logger())
@@ -72,6 +76,11 @@ func Run() {
 
 	api := router.Group("/api")
 	{
+		auth := api.Group("/auth")
+		{
+			auth.POST("/register", authHandler.Register)
+			auth.POST("/login", authHandler.Login)
+		}
 		customers := api.Group("/customers")
 		{
 			customers.GET("/", customerHandler.GetAll)
@@ -98,14 +107,19 @@ func Run() {
 		}
 		carts := customers.Group("/:id")
 		{
-			carts.POST("/cart/item", cartHandler.AddToCart)
-			carts.GET("/cart", cartHandler.GetCartByCustomerId)
+			//carts.POST("/cart/item", cartHandler.AddToCart)
+			//carts.GET("/cart", cartHandler.GetCartByCustomerId)
 			carts.PUT("/cart/item", cartHandler.UpdateCartItem)
 			carts.DELETE("/cart/item/:product_id", cartHandler.RemoveCartItem)
 			carts.DELETE("/cart", cartHandler.ClearCart)
 		}
 	}
-
+	protected := api.Group("/")
+	protected.Use(middleware.JWTAuth())
+	{
+		protected.GET("/customers/:id/cart", cartHandler.GetCartByCustomerId)
+		protected.POST("/customers/:id/cart/item", cartHandler.AddToCart)
+	}
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

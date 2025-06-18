@@ -57,3 +57,75 @@ time=2025-06-16T14:46:04.574+07:00 level=INFO source=D:/intern-project-v2/logger
 time=2025-06-16T14:51:04.576+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
 time=2025-06-16T14:55:34.074+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
 time=2025-06-16T14:55:52.901+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T15:09:21.695+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-16T15:09:37.445+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Customer created successfully" customer="&{Id:ObjectID(\"684fd140c8c6433c63616117\") Name:Phuc Binh Email:phucbinh@gmail.com Phone:03786189400}"
+time=2025-06-16T15:09:37.446+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=605.24ms Method:=POST Path:=/api/customers/ From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=201 "Response Size:"=153B
+time=2025-06-16T15:10:39.960+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Customer created successfully" customer="&{Id:ObjectID(\"684fd17fc8c6433c63616118\") Name:Phuc Binh Email:phucbinh@gmail.com Phone:03786189400}"
+time=2025-06-16T15:10:39.961+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=49.20ms Method:=POST Path:=/api/customers/ From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=201 "Response Size:"=153B
+time=2025-06-16T15:10:53.936+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=46.70ms Method:=GET Path:=/api/customers/684fd17fc8c6433c63616118 From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=118B
+time=2025-06-16T15:11:07.080+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=64.68ms Method:=GET Path:=/api/customers/684fd17fc8c6433c63616118 From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=118B
+time=2025-06-16T15:14:21.699+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:19:21.700+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:24:21.702+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:29:21.704+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:34:21.706+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:39:21.707+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:44:21.709+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:49:21.711+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:54:21.711+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T15:59:21.712+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:04:21.714+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:09:21.715+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:14:21.716+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:19:21.716+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:24:21.717+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:29:21.718+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:34:21.719+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:39:25.294+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:44:25.295+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:49:25.296+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:54:25.296+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T16:59:25.297+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:04:25.298+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:09:25.299+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:14:25.301+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:19:25.302+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:24:25.302+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:29:25.303+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:34:25.303+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:39:25.304+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:44:25.306+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:49:25.308+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:54:25.309+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T17:59:25.310+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T18:04:25.312+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T18:09:25.313+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T18:14:25.314+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-16T18:19:25.314+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-18T15:03:34.781+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-18T15:04:15.807+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-18T15:09:15.810+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-18T15:11:18.265+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=605.73ms Method:=POST Path:=/api/auth/register From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=201 "Response Size:"=116B
+time=2025-06-18T15:12:42.932+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=0.00ns Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:13:10.139+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=0.00ns Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:13:18.516+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=714.20μs Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:13:24.140+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=0.00ns Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:14:15.810+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-18T15:14:53.430+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=0.00ns Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:14:58.810+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=512.80μs Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:15:13.489+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=512.50μs Method:=GET Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=404 "Response Size:"=-1B
+time=2025-06-18T15:15:17.342+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=46.70ms Method:=POST Path:=/api/auth/login From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=325B
+time=2025-06-18T15:19:15.813+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-18T15:20:25.961+07:00 level=ERROR source=D:/intern-project-v2/logger/logger.go:92 msg="Customer's cart is empty" customer_id=685274a5fac6dc534965c4f7
+time=2025-06-18T15:20:25.961+07:00 level=ERROR source=D:/intern-project-v2/logger/logger.go:92 msg="Request ended with error" Time:=59.96ms Method:=GET Path:=/api/customers/685274a5fac6dc534965c4f7/cart From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=500 "Response Size:"=65B
+time=2025-06-18T15:20:56.792+07:00 level=ERROR source=D:/intern-project-v2/logger/logger.go:92 msg="Customer's cart is empty" customer_id=685274a5fac6dc534965c4f7
+time=2025-06-18T15:20:56.793+07:00 level=ERROR source=D:/intern-project-v2/logger/logger.go:92 msg="Request ended with error" Time:=88.76ms Method:=GET Path:=/api/customers/685274a5fac6dc534965c4f7/cart From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=500 "Response Size:"=65B
+time=2025-06-18T15:22:27.553+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-18T15:23:05.184+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Adding item to cart" customerID=685274a5fac6dc534965c4f7 item="&{ProductID:6846b1c16d197a1d36e226de ProductName:5D Mask ProductPrice:50000 Quantity:1 Subtotal:50000}"
+time=2025-06-18T15:23:05.274+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Creating new cart for customer" customer_id=685274a5fac6dc534965c4f7 reason=cart_not_found
+time=2025-06-18T15:23:05.359+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="New cart created successfully" customer_id=685274a5fac6dc534965c4f7 cart_id=68527769ca912051c2328d00 total_items=1 total_price=50000
+time=2025-06-18T15:23:05.361+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=1.36s Method:=POST Path:=/api/customers/685274a5fac6dc534965c4f7/cart/item From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=200 "Response Size:"=184B
+time=2025-06-18T15:23:39.168+07:00 level=WARN source=D:/intern-project-v2/logger/logger.go:88 msg="Request ended with warning" Time:=510.70μs Method:=POST Path:=/api/customers/685274a5fac6dc534965c4f7/cart/item From:=::1 User-Agent:=PostmanRuntime/7.44.0 "Status Code:"=401 "Response Size:"=68B
+time=2025-06-18T15:27:27.555+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-18T15:32:27.557+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-18T15:37:27.558+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"

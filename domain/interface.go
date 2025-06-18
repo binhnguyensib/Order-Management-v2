@@ -67,3 +67,13 @@ type CartRepository interface {
 	RemoveCartItem(ctx context.Context, customerID string, productID string) (*Cart, error)
 	ClearCart(ctx context.Context, customerID string) error
 }
+
+type AuthUsecase interface {
+	Register(ctx context.Context, req *CustomerRegiser) (*Customer, error)
+	Login(ctx context.Context, req *CustomerLogin) (*Customer, string, error)
+}
+
+type AuthRepository interface {
+	Register(ctx context.Context, customer *Customer) error
+	Login(ctx context.Context, email string) (*Customer, error)
+}
