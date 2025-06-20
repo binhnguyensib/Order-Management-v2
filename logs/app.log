@@ -201,3 +201,7 @@ time=2025-06-20T14:31:46.177+07:00 level=INFO source=D:/intern-project-v2/logger
 time=2025-06-20T14:33:31.046+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
 time=2025-06-20T14:38:31.049+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
 time=2025-06-20T14:39:04.444+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-20T14:44:04.449+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T14:49:04.450+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T14:54:04.452+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T14:59:04.453+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
