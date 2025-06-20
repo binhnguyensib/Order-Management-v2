@@ -152,3 +152,16 @@ time=2025-06-20T11:13:13.562+07:00 level=INFO source=D:/intern-project-v2/logger
 time=2025-06-20T11:13:19.560+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=332.10ms Method:=GET Path:=/api/products/6854dd2cb82d3979039e5b6d From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=105B
 time=2025-06-20T11:13:25.566+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=49.03ms Method:=GET Path:=/api/products/6854dd2cb82d3979039e5b6d From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=108B
 time=2025-06-20T11:17:34.337+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-20T11:18:03.990+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Connected to MongoDB"
+time=2025-06-20T11:18:13.471+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=401.99ms Method:=GET Path:=/api/products/6854dd2cb82d3979039e5b6d From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=105B
+time=2025-06-20T11:18:16.157+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=0.00ns Method:=GET Path:=/api/products/6854dd2cb82d3979039e5b6d From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=105B
+time=2025-06-20T11:18:18.892+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=745.10μs Method:=GET Path:=/api/products/6854dd2cb82d3979039e5b6d From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=105B
+time=2025-06-20T11:19:58.073+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=46.47ms Method:=GET Path:=/api/products/6854dcd8b82d3979039e5b6b From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=98B
+time=2025-06-20T11:20:09.946+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Request ended successfully" Time:=0.00ns Method:=GET Path:=/api/products/6854dcd8b82d3979039e5b6b From:=::1 User-Agent:=PostmanRuntime/7.44.1 "Status Code:"=200 "Response Size:"=98B
+time=2025-06-20T11:23:03.993+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T11:28:03.994+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T11:33:03.997+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T11:38:03.998+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T11:43:03.999+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T11:48:04.001+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
+time=2025-06-20T11:53:04.002+07:00 level=INFO source=D:/intern-project-v2/logger/logger.go:84 msg="Cleanup completed: old clients removed"
