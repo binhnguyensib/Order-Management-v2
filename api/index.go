@@ -1,14 +1,14 @@
 package handler
 
 import (
-	"net/http"
-	"sync"
-
 	"intern-project-v2/config"
+	_ "intern-project-v2/docs"
 	appHandler "intern-project-v2/handler"
 	"intern-project-v2/middleware"
 	"intern-project-v2/repository/mongodb"
 	"intern-project-v2/usecase"
+	"net/http"
+	"sync"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
