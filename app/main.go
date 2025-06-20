@@ -20,7 +20,7 @@ import (
 // @title Order Management API
 // @version 2.0
 // @description This is a sample server for managing orders, customers, products, and carts.
-// @host localhost:8080
+// @host order-management-v2.vercel.app
 // @BasePath /api
 func init() {
 	err := godotenv.Load()
