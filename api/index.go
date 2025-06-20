@@ -12,6 +12,8 @@ import (
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 var (
@@ -19,9 +21,8 @@ var (
 	once   sync.Once
 )
 
-// ✅ Main serverless handler
+// Main serverless handler
 func Handler(w http.ResponseWriter, r *http.Request) {
-	// Initialize router chỉ 1 lần để tránh cold start chậm
 	once.Do(func() {
 		initializeApp()
 	})
@@ -50,7 +51,6 @@ func initializeApp() {
 	router = setupRouter(deps)
 }
 
-// ✅ Sửa Dependencies struct với interface types thay vì concrete types
 type Dependencies struct {
 	CustomerHandler interface {
 		GetAll(c *gin.Context)
@@ -112,7 +112,6 @@ func setupDependencies(db *config.Database) *Dependencies {
 	authUsecase := usecase.NewAuthUsecase(authRepo)
 	authHandler := appHandler.NewAuthHandler(authUsecase)
 
-	// ✅ Return interface implementations
 	return &Dependencies{
 		CustomerHandler: customerHandler,
 		ProductHandler:  productHandler,
@@ -128,16 +127,12 @@ func setupRouter(deps *Dependencies) *gin.Engine {
 	// ✅ Simplified middleware cho serverless
 	router.Use(gin.Recovery())
 	router.Use(middleware.SetupCORS())
+	router.Use(middleware.RateLimit(3))
+	// - middleware.RequestLogging()
+	// - gin.Logger()
 
-	// ❌ Bỏ các middleware không phù hợp với serverless:
-	// - middleware.RateLimit(3) - cần persistent state
-	// - middleware.RequestLogging() - có thể gây overhead
-	// - gin.Logger() - Vercel đã có logging
-
-	// ✅ Giữ gzip compression
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 
-	// Health check endpoint
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"status":  "ok",
@@ -153,8 +148,7 @@ func setupRouter(deps *Dependencies) *gin.Engine {
 		})
 	})
 
-	// ❌ Bỏ Swagger cho production (có thể gây issue với Vercel)
-	// router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Setup API routes
 	setupAPIRoutes(router, deps)
@@ -185,10 +179,8 @@ func setupAPIRoutes(router *gin.Engine, deps *Dependencies) {
 		// Product routes
 		products := api.Group("/products")
 		{
-			// ❌ Tạm thời bỏ cache middleware vì có thể gây double response
-			// Sẽ implement cache khác sau
-			products.GET("/", deps.ProductHandler.GetAll)
-			products.GET("/:id", deps.ProductHandler.GetByID)
+			products.GET("/", middleware.CacheMiddleware(15*60, deps.ProductHandler.GetAll))
+			products.GET("/:id", middleware.CacheMiddleware(15*60, deps.ProductHandler.GetByID))
 			products.POST("/", deps.ProductHandler.Create)
 			products.PUT("/:id", deps.ProductHandler.Update)
 			products.DELETE("/:id", deps.ProductHandler.Delete)

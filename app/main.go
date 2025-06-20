@@ -74,7 +74,9 @@ func Run() {
 		})
 	})
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	config.InitCache() // Initialize cache store
+
 	api := router.Group("/api")
 	{
 		auth := api.Group("/auth")
