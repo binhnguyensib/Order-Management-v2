@@ -1,8 +1,13 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is a sample server for managing orders, customers, products, and carts.",
+        "title": "Order Management API",
+        "contact": {},
+        "version": "2.0"
     },
+    "host": "order-management-v2.vercel.app",
+    "basePath": "/api",
     "paths": {
         "/customers": {
             "get": {

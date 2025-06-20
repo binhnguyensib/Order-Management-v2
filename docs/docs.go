@@ -900,12 +900,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "2.0",
+	Host:             "order-management-v2.vercel.app",
+	BasePath:         "/api",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Order Management API",
+	Description:      "This is a sample server for managing orders, customers, products, and carts.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
