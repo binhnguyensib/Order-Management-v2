@@ -125,9 +125,10 @@ func setupRouter(deps *Dependencies) *gin.Engine {
 	router := gin.New()
 
 	// ✅ Simplified middleware cho serverless
+
 	router.Use(gin.Recovery())
 	router.Use(middleware.SetupCORS())
-	router.Use(middleware.RateLimit(3))
+	router.Use(middleware.RateLimit(10))
 	// - middleware.RequestLogging()
 	// - gin.Logger()
 
