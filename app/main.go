@@ -8,6 +8,7 @@ import (
 	"intern-project-v2/repository/mongodb"
 	"intern-project-v2/usecase"
 	"os"
+	"time"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
@@ -73,7 +74,7 @@ func Run() {
 		})
 	})
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	config.InitCache() // Initialize cache store
 	api := router.Group("/api")
 	{
 		auth := api.Group("/auth")
@@ -90,9 +91,10 @@ func Run() {
 			customers.DELETE("/:id", customerHandler.Delete)
 		}
 		products := api.Group("/products")
+
 		{
-			products.GET("/", productHandler.GetAll)
-			products.GET("/:id", productHandler.GetByID)
+			products.GET("/", middleware.CacheMiddleware(time.Minute*15, productHandler.GetAll))
+			products.GET("/:id", middleware.CacheMiddleware(time.Minute*15, productHandler.GetByID))
 			products.POST("/", productHandler.Create)
 			products.PUT("/:id", productHandler.Update)
 			products.DELETE("/:id", productHandler.Delete)

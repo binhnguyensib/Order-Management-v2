@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"intern-project-v2/domain"
 	"net/http"
 
@@ -55,6 +56,7 @@ func (ph *productHandler) GetAll(c *gin.Context) {
 // @Failure 500
 // @Router /products/{id} [get]
 func (ph *productHandler) GetByID(c *gin.Context) {
+	fmt.Println("Handler is called")
 	id := c.Param("id")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID parameter is required"})
